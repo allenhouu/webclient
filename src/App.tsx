@@ -3,7 +3,7 @@ import './App.css'
 
 
 function App() {
-    const API_URL = 'http://localhost:3000';
+    const API_URL = 'https://server-1-095p.onrender.com';
     const[name, setName] = useState<string>("");
     const[email, setEmail] = useState<string>("");
     const[password, setPassword] = useState<string>("");
@@ -57,9 +57,9 @@ function App() {
 
   return (
       <>
-          <input placeholder="Type here" value={name} onChange={e => setName(e.target.value)} type="text"/>
-          <input placeholder="Type here" value={email} onChange={e => setEmail(e.target.value)} type="text"></input>
-          <input placeholder="Type here" value={password} onChange={e => setPassword(e.target.value)} type="text"></input>
+          <input placeholder="Enter Name" value={name} onChange={e => setName(e.target.value)} type="text"/>
+          <input placeholder="Enter Email" value={email} onChange={e => setEmail(e.target.value)} type="text"></input>
+          <input placeholder="Enter Password" value={password} onChange={e => setPassword(e.target.value)} type="text"></input>
           <button id="post" onClick={() => {
               const data = {name, email, password};
               fetch(API_URL, {
@@ -95,7 +95,7 @@ function App() {
                                   throw new Error(`HTTP error! status: ${res.status}`);
                               }
                           })
-                      }}></button>
+                      }}>Update</button>
 
                       <button onClick={() => {
                           const data = {name, email, password};
@@ -110,25 +110,13 @@ function App() {
                                   throw new Error(`HTTP error! status: ${res.status}`);
                               }
                           })
-                      }}></button>
+                      }}>Delete</button>
 
                   </div>
               )
           }
 
 
-          <input id="search" placeholder="Type here to search"/>
-          {
-              <button onClick={() => {
-                  const name = (document.getElementById('search') as HTMLInputElement).value;
-                  setName(name);
-                  const email = (document.getElementById('search') as HTMLInputElement).value;
-                  setEmail(email);
-                  const password = (document.getElementById('search') as HTMLInputElement).value;
-                  setPassword(password);
-              }
-              }>Enter</button>
-          }
       </>
   )
 }
