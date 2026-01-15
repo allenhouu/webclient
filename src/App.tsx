@@ -3,7 +3,8 @@ import './App.css'
 
 
 function App() {
-    const API_URL = 'https://server-1-095p.onrender.com';
+    const API_URL = 'http://localhost:3000';
+
     const[name, setName] = useState<string>("");
     const[email, setEmail] = useState<string>("");
     const[password, setPassword] = useState<string>("");
@@ -49,13 +50,13 @@ function App() {
           {
               users.map((item, i) =>
                   <div id="result" key={i}>
-                      <span>{item.name}</span>
-                      <span>{item.email}</span>
-                      <span>{item.password}</span>
+                      <span>Username: {item.name} </span>
+                      <span>Email: {item.email} </span>
+                      <span>Password: {item.password}</span>
 
                       <button onClick={() => {
                           const data = {name, email, password};
-                          fetch(API_URL, {
+                          fetch(API_URL + "/" + i, {
                               method: 'PUT',
                               headers: {
                                   'Content-Type': 'application/json',
@@ -65,13 +66,14 @@ function App() {
                               if(!res.ok) {
                                   throw new Error(`HTTP error! status: ${res.status}`);
                               }
+                              else return res.json()
                           })
-                          console.log(data)
+                              .then(data => setUsers(data))
                       }}>Update</button>
 
                       <button onClick={() => {
                           const data = {name, email, password};
-                          fetch(API_URL, {
+                          fetch(API_URL + "/" + i, {
                               method: 'DELETE',
                               headers: {
                                   'Content-Type': 'application/json',
@@ -81,15 +83,14 @@ function App() {
                               if(!res.ok) {
                                   throw new Error(`HTTP error! status: ${res.status}`);
                               }
+                              else return res.json()
                           })
-                          console.log(data)
+                              .then((data) => {setUsers(data)})
                       }}>Delete</button>
                   </div>
               )
 
           }
-
-
 
       </>
   )
