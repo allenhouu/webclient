@@ -1,9 +1,8 @@
 import {useEffect, useState} from 'react'
 import './App.css'
 
-
 function App() {
-    const API_URL = 'http://localhost:3000';
+    const API_URL = 'https://server-1-095p.onrender.com';
 
     const[name, setName] = useState<string>("");
     const[email, setEmail] = useState<string>("");
@@ -16,13 +15,11 @@ function App() {
                 if (!res.ok) {
                     throw new Error(`HTTP error! status: ${res.status}`);
                 }
+
                 return res.json();
             })
-            .catch((error) => {
-                console.log(error)
-            });
+            .catch(error => console.log(error));
     }, []);
-
 
   return (
       <>
@@ -44,11 +41,10 @@ function App() {
                   else return res.json()
               })
                   .then((data) => {setUsers(data)})
-              console.log(data)
+                  .catch(error => console.log(error));
           }}>Add
           </button>
-          {
-              users.map((item, i) =>
+          {users.map((item, i) =>
                   <div id="result" key={i}>
                       <span>Username: {item.name} </span>
                       <span>Email: {item.email} </span>
@@ -69,6 +65,7 @@ function App() {
                               else return res.json()
                           })
                               .then(data => setUsers(data))
+                              .catch(error => console.log(error));
                       }}>Update</button>
 
                       <button onClick={() => {
@@ -86,12 +83,10 @@ function App() {
                               else return res.json()
                           })
                               .then((data) => {setUsers(data)})
+                              .catch(error => console.log(error));
                       }}>Delete</button>
                   </div>
-              )
-
-          }
-
+              )}
       </>
   )
 }
